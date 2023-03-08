@@ -1,9 +1,12 @@
+org: AJAberdein
+app: sercerless-boilerplate
 service: serverless-boilerplate
 frameworkVersion: '3'
 
 provider:
   name: aws
   runtime: nodejs18.x
+  region: eu-west-1
 
 functions:
   function1:
