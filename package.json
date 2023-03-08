@@ -1,0 +1,8 @@
+{
+  "name": "serverless-boilerplate",
+  "version": "1.0.0",
+  "description": "A boilerplate for serverless projects",
+  "dependencies": {
+    "aws-sdk": "^2.1330.0"
+  }
+}

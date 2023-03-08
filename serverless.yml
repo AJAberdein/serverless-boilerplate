@@ -1,13 +1,43 @@
-org: AJAberdein
-app: sercerless-boilerplate
 service: serverless-boilerplate
-frameworkVersion: '3'
+frameworkVersion: "3"
 
 provider:
   name: aws
   runtime: nodejs18.x
   region: eu-west-1
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Scan
+            - dynamodb:Query
+            - dynamodb:PutItem
+            - dynamodb:GetItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - Fn::GetAtt: [DocumentsTable, Arn]
 
 functions:
-  function1:
-    handler: index.handler
+  createDocument:
+    timeout: 30
+    handler: src/functions/documents/create.handler
+    events:
+      - http:
+          path: /documents
+          method: post
+
+resources:
+  Resources:
+    DocumentsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        TableName: documents
