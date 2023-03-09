@@ -20,14 +20,21 @@ provider:
             - Fn::GetAtt: [DocumentsTable, Arn]
 
 functions:
-  createDocument:
+  readDocuments:
+    timeout: 30
+    handler: src/functions/documents/read.handler
+    events:
+      - http:
+          path: /documents
+          method: get
+  createDocuments:
     timeout: 30
     handler: src/functions/documents/create.handler
     events:
       - http:
           path: /documents
           method: post
-  deleteDocument:
+  deleteDocuments:
     timeout: 30
     handler: src/functions/documents/delete.handler
     events:

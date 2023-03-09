@@ -11,6 +11,8 @@
 
 - error handling
 
+- dynamo ttl
+
 - logging
 
 - dynamodb module
