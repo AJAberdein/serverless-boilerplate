@@ -27,6 +27,13 @@ functions:
       - http:
           path: /documents
           method: post
+  deleteDocument:
+    timeout: 30
+    handler: src/functions/documents/delete.handler
+    events:
+      - http:
+          path: /documents
+          method: delete
 
 resources:
   Resources:

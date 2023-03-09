@@ -1,8 +1,26 @@
 
 # TODO
 
-1. setup serverless base-project
-2. scaffold dir structure
-3. create simple crud api
-4. dynamodb module
-5. serverless-offline
+## 100 days of serverless
+
+ - ~~setup serverless base-project~~
+
+- scaffold dir structure
+
+- create simple crud api
+
+- error handling
+
+- logging
+
+- dynamodb module
+
+- serverless-offline
+
+- serverless-offline docker
+
+- middy and powertools
+
+- sqs db proxy
+
+ 
