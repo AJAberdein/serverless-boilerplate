@@ -6,28 +6,33 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient();
 const DYNAMO_TABLE_DOCUMENTS = process.env.DYNAMO_TABLE_DOCUMENTS || 'documents';
 
 /**
- * Delete a document in dynamodb by id
+ * @description Update a document in dynamodb by id
  * @param {Object} event
  * @param {Object} context
  * @param {Function} callback
  * 
  * @returns {Object}
  * 
- * @example
- * {
- *  "id": "a56b31a3-0198-4f6b-8e8b-78e6c86a4147"
- * }
- * 
  */
 const handler = async (event, context, callback) => {
     const { id } = event.pathParameters;
+    const { name, description } = event;
 
     /**
-     * Delete document item in dynamodb
+     * Update document item in dynamodb
      */
-    const result = await dynamoDb.delete({
+    const result = await dynamoDb.update({
         TableName: DYNAMO_TABLE_DOCUMENTS,
         Key: { id },
+        UpdateExpression: "set #name = :name, #description = :description",
+        ExpressionAttributeNames: {
+            "#name": "name",
+            "#description": "description",
+        },
+        ExpressionAttributeValues: {
+            ":name": name,
+            ":description": description,
+        },
     }).promise();
 
     return {

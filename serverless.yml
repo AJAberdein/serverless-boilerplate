@@ -34,12 +34,19 @@ functions:
       - http:
           path: /documents
           method: post
+  updateDocuments:
+    timeout: 30
+    handler: src/functions/documents/update.handler
+    events:
+      - http:
+          path: /documents/{id}
+          method: put
   deleteDocuments:
     timeout: 30
     handler: src/functions/documents/delete.handler
     events:
       - http:
-          path: /documents
+          path: /documents/{id}
           method: delete
 
 resources:
