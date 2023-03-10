@@ -2,7 +2,29 @@ service: serverless-boilerplate
 frameworkVersion: "3"
 
 plugins:
+  - serverless-dynamodb-local
   - serverless-offline
+
+custom:
+  dynamodb:
+    start:
+      port: 8000
+      inMemory: false
+      migrate: false
+      seed: false
+    stages:
+      - local
+      - dev
+    seed:
+      dev:
+        sources:
+          - table: documents
+            sources: [./src/database/seeds/documents.json]
+    migrations:
+      dev:
+        sources:
+          - table: documents
+            sources: [./src/database/migrations/documents.json]
 
 provider:
   name: aws
