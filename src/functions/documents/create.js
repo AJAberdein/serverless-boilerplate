@@ -1,26 +1,9 @@
 "use strict";
 
 const AWS = require('aws-sdk');
-
-
-// TODO: Refactor to DynamoDB module START
-
-const dev = {
-    region: 'localhost',
-    endpoint: 'http://localhost:8000'
-};
-
-const prod = { region: process.env.REGION || 'us-east-1' };
-
-const config = process.env.IS_OFFLINE ? dev : prod
-
-console.log(config);
-
-const dynamoDb = new AWS.DynamoDB.DocumentClient(config);
-
+const dynamo = require('../../modules/dynamo');
 const DYNAMO_TABLE_DOCUMENTS = process.env.DYNAMO_TABLE_DOCUMENTS || 'documents';
 
-// TODO: Refactor to DynamoDB module END
 
 
 /**
@@ -50,10 +33,10 @@ const handler = async (event, context, callback) => {
     /**
      * Put document item into dynamodb
      */
-    const result = await dynamoDb.put({
+    const result = await dynamo.put({
         TableName: DYNAMO_TABLE_DOCUMENTS,
         Item: document,
-    }).promise();
+    });
 
     return {
         statusCode: 200,

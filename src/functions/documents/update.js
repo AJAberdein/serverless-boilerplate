@@ -1,8 +1,6 @@
 "use strict";
 
-const AWS = require('aws-sdk');
-const dynamoDb = new AWS.DynamoDB.DocumentClient();
-
+const dynamo = require('../../modules/dynamo');
 const DYNAMO_TABLE_DOCUMENTS = process.env.DYNAMO_TABLE_DOCUMENTS || 'documents';
 
 /**
@@ -21,19 +19,21 @@ const handler = async (event, context, callback) => {
     /**
      * Update document item in dynamodb
      */
-    const result = await dynamoDb.update({
+    const result = await dynamo.update({
         TableName: DYNAMO_TABLE_DOCUMENTS,
         Key: { id },
-        UpdateExpression: "set #name = :name, #description = :description",
+        UpdateExpression: "set #name = :name, #description = :description, #updatedAt = :updatedAt",
         ExpressionAttributeNames: {
             "#name": "name",
             "#description": "description",
+            "#updatedAt": "updatedAt",
         },
         ExpressionAttributeValues: {
             ":name": name,
             ":description": description,
+            ":updatedAt": new Date().toISOString(),
         },
-    }).promise();
+    });
 
     return {
         statusCode: 200,

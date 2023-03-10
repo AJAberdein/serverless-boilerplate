@@ -1,8 +1,6 @@
 "use strict";
 
-const AWS = require('aws-sdk');
-const dynamoDb = new AWS.DynamoDB.DocumentClient();
-
+const dynamo = require('../../modules/dynamo');
 const DYNAMO_TABLE_DOCUMENTS = process.env.DYNAMO_TABLE_DOCUMENTS || 'documents';
 
 /**
@@ -25,10 +23,10 @@ const handler = async (event, context, callback) => {
     /**
      * Delete document item in dynamodb
      */
-    const result = await dynamoDb.delete({
+    const result = await dynamo.delete({
         TableName: DYNAMO_TABLE_DOCUMENTS,
         Key: { id },
-    }).promise();
+    });
 
     return {
         statusCode: 200,
