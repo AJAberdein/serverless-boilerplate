@@ -16,7 +16,7 @@ const DYNAMO_TABLE_DOCUMENTS = process.env.DYNAMO_TABLE_DOCUMENTS || 'documents'
  */
 const handler = async (event, context, callback) => {
     const { id } = event.pathParameters;
-    const { name, description } = event;
+    const { name, description } = JSON.parse(event.body);
 
     /**
      * Update document item in dynamodb

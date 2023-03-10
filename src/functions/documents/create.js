@@ -21,7 +21,7 @@ const DYNAMO_TABLE_DOCUMENTS = process.env.DYNAMO_TABLE_DOCUMENTS || 'documents'
  * 
  */
 const handler = async (event, context, callback) => {
-    const { name, description } = event;
+    const { name, description } = JSON.parse(event.body);
     const document = {
         id: AWS.util.uuid.v4(),
         name,

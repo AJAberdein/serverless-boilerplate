@@ -1,6 +1,9 @@
 service: serverless-boilerplate
 frameworkVersion: "3"
 
+plugins:
+  - serverless-offline
+
 provider:
   name: aws
   runtime: nodejs18.x

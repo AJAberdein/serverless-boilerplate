@@ -15,7 +15,7 @@ const DYNAMO_TABLE_DOCUMENTS = process.env.DYNAMO_TABLE_DOCUMENTS || 'documents'
  * 
  */
 const handler = async (event, context, callback) => {
-    
+
     /**
      * Scan document items in dynamodb
      */
