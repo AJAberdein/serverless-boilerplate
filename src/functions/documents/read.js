@@ -1,9 +1,27 @@
 "use strict";
 
 const AWS = require('aws-sdk');
-const dynamoDb = new AWS.DynamoDB.DocumentClient();
+
+
+// TODO: Refactor to DynamoDB module START
+
+const dev = {
+    region: 'localhost',
+    endpoint: 'http://localhost:8000'
+};
+
+const prod = { region: process.env.REGION || 'us-east-1' };
+
+const config = process.env.IS_OFFLINE ? dev : prod
+
+console.log(config);
+
+const dynamoDb = new AWS.DynamoDB.DocumentClient(config);
 
 const DYNAMO_TABLE_DOCUMENTS = process.env.DYNAMO_TABLE_DOCUMENTS || 'documents';
+
+// TODO: Refactor to DynamoDB module END
+
 
 /**
  * Read documents in dynamodb

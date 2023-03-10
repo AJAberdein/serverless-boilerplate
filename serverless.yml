@@ -9,7 +9,7 @@ custom:
   dynamodb:
     start:
       port: 8000
-      inMemory: false
+      inMemory: true
       migrate: false
       seed: false
     stages:
