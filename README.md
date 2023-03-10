@@ -21,10 +21,6 @@ tar zxvf dynamodb_local_latest.tar.gz -C .dynamodb
 
 Running serverless locally w/ dynamodb & api-gw
 
-TODO: npm script
-
 ```
-sls dynamodb start --migrate
-aws dynamodb create-table --endpoint-url http://localhost:8000 --table-name documents --attribute-definitions AttributeName=id,AttributeType=S --key-schema AttributeName=id,KeyType=HASH --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5
 serverless offline start
 ```

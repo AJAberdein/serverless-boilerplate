@@ -19,7 +19,9 @@
 
 - ~~serverless-offline~~
 
-- serverless-offline dynamodb
+- ~~serverless-offline dynamodb~~
+
+- ~~seeders and schema~~
 
 - serverless-offline docker
 
@@ -27,7 +29,7 @@
 
 - sqs db proxy
 
-- DLQ config    
+- DLQ config
 
 - security/cognito
 

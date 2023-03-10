@@ -9,9 +9,10 @@ custom:
   dynamodb:
     start:
       port: 8000
-      inMemory: true
-      migrate: false
-      seed: false
+      inMemory: false
+      dbPath: ./.dynamodb
+      migrate: true
+      seed: true
     stages:
       - local
       - dev
