@@ -14,26 +14,13 @@ const DYNAMO_TABLE_DOCUMENTS = process.env.DYNAMO_TABLE_DOCUMENTS || 'documents'
  */
 const handler = async (event, context, callback) => {
     const { id } = event.pathParameters;
-    const { name, description } = JSON.parse(event.body);
+    const {name, description} = JSON.parse(event.body);
 
-    /**
-     * Update document item in dynamodb
-     */
-    const result = await dynamo.update({
-        TableName: DYNAMO_TABLE_DOCUMENTS,
-        Key: { id },
-        UpdateExpression: "set #name = :name, #description = :description, #updatedAt = :updatedAt",
-        ExpressionAttributeNames: {
-            "#name": "name",
-            "#description": "description",
-            "#updatedAt": "updatedAt",
-        },
-        ExpressionAttributeValues: {
-            ":name": name,
-            ":description": description,
-            ":updatedAt": new Date().toISOString(),
-        },
-    });
+    let params = {}
+    if (name) params.name = name
+    if (description) params.description = description
+
+    const result = await dynamo.update(id, params, DYNAMO_TABLE_DOCUMENTS);
 
     return {
         statusCode: 200,

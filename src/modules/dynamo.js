@@ -44,8 +44,23 @@ const client = {
     /**
      * Update items in dynamodb
      */
-    update: async (params) => {
-        return await dynamoDb.update(params).promise();
+    update: async (id, params, tableName) => {
+        const updateParams = {
+            TableName: tableName,
+            Key: { id },
+            UpdateExpression: 'set ',
+            ExpressionAttributeNames: {},
+            ExpressionAttributeValues: {},
+            ReturnValues: 'ALL_NEW',
+        };
+
+        Object.keys(params).forEach((key, index) => {
+            updateParams.UpdateExpression += `#${key} = :${key}${index < Object.keys(params).length - 1 ? ', ' : ''}`;
+            updateParams.ExpressionAttributeNames[`#${key}`] = `${key}`;
+            updateParams.ExpressionAttributeValues[`:${key}`] = params[key];
+        });
+
+        return await dynamoDb.update(updateParams).promise();
     },
 
     /**
