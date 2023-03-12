@@ -4,8 +4,6 @@ const AWS = require('aws-sdk');
 const dynamo = require('../../modules/dynamo');
 const DYNAMO_TABLE_DOCUMENTS = process.env.DYNAMO_TABLE_DOCUMENTS || 'documents';
 
-
-
 /**
  * Create a new document in dynamodb
  * @param {Object} event
@@ -33,10 +31,10 @@ const handler = async (event, context, callback) => {
     /**
      * Put document item into dynamodb
      */
-    const result = await dynamo.put({
-        TableName: DYNAMO_TABLE_DOCUMENTS,
-        Item: document,
-    });
+    const result = await dynamo.put(
+        document,
+        DYNAMO_TABLE_DOCUMENTS
+    );
 
     return {
         statusCode: 200,

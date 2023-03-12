@@ -23,11 +23,11 @@ const handler = async (event, context, callback) => {
     /**
      * Delete document item in dynamodb
      */
-    const result = await dynamo.delete({
-        TableName: DYNAMO_TABLE_DOCUMENTS,
-        Key: { id },
-    });
-
+    const result = await dynamo.delete(
+        id, 
+        DYNAMO_TABLE_DOCUMENTS
+    );
+    
     return {
         statusCode: 200,
         body: JSON.stringify(result),

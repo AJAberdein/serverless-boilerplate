@@ -70,3 +70,13 @@
 - tracing/x-ray
 
 - stress-test/ load-test with artillery: cpu, memory, concurrency, safty throttles, duration, cold-starts
+
+- gsi/lsi
+
+- dynamodb streams to lambdas
+
+- table rotation
+
+- shadow table
+
+- lambda log streams to ELK

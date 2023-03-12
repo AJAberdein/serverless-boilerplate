@@ -14,13 +14,17 @@ const DYNAMO_TABLE_DOCUMENTS = process.env.DYNAMO_TABLE_DOCUMENTS || 'documents'
  */
 const handler = async (event, context, callback) => {
     const { id } = event.pathParameters;
-    const {name, description} = JSON.parse(event.body);
+    const { name, description } = JSON.parse(event.body);
 
     let params = {}
     if (name) params.name = name
     if (description) params.description = description
 
-    const result = await dynamo.update(id, params, DYNAMO_TABLE_DOCUMENTS);
+    const result = await dynamo.update(
+        id,
+        params,
+        DYNAMO_TABLE_DOCUMENTS
+    );
 
     return {
         statusCode: 200,
