@@ -2,10 +2,32 @@ service: serverless-boilerplate
 frameworkVersion: "3"
 
 plugins:
+  - serverless-webpack
   - serverless-dynamodb-local
   - serverless-offline
 
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: eu-west-1
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Scan
+            - dynamodb:Query
+            - dynamodb:PutItem
+            - dynamodb:GetItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - Fn::GetAtt: [DocumentsTable, Arn]
+
 custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
   dynamodb:
     start:
       port: 8000
@@ -26,24 +48,6 @@ custom:
         sources:
           - table: documents
             sources: [./src/database/migrations/documents.json]
-
-provider:
-  name: aws
-  runtime: nodejs18.x
-  region: eu-west-1
-  iam:
-    role:
-      statements:
-        - Effect: Allow
-          Action:
-            - dynamodb:Scan
-            - dynamodb:Query
-            - dynamodb:PutItem
-            - dynamodb:GetItem
-            - dynamodb:UpdateItem
-            - dynamodb:DeleteItem
-          Resource:
-            - Fn::GetAtt: [DocumentsTable, Arn]
 
 functions:
   readDocuments:

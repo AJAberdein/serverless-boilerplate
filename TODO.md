@@ -13,9 +13,15 @@
 
 - dynamo ttl
 
+- ~~serverless-webpack~~
+
+- ~~babel~~
+
+- ~~es6~~
+
 - logging
 
-- dynamodb module
+- ~~dynamodb module~~
 
 - ~~serverless-offline~~
 
@@ -80,3 +86,9 @@
 - shadow table
 
 - lambda log streams to ELK
+
+- event vs scheduled lambda
+
+- event DLQ
+
+- unit test with jest

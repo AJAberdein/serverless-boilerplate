@@ -1,7 +1,8 @@
 "use strict";
 
-const AWS = require('aws-sdk');
-const dynamo = require('../../modules/dynamo');
+import dynamo from '../../modules/dynamo';
+import aws from 'aws-sdk';
+
 const DYNAMO_TABLE_DOCUMENTS = process.env.DYNAMO_TABLE_DOCUMENTS || 'documents';
 
 /**
@@ -19,10 +20,10 @@ const DYNAMO_TABLE_DOCUMENTS = process.env.DYNAMO_TABLE_DOCUMENTS || 'documents'
  * }
  * 
  */
-const handler = async (event, context, callback) => {
+export const handler = async (event, context, callback) => {
     const { name, description } = JSON.parse(event.body);
     const document = {
-        id: AWS.util.uuid.v4(),
+        id: aws.util.uuid.v4(),
         name,
         description,
         createdAt: new Date().toISOString(),
@@ -41,5 +42,3 @@ const handler = async (event, context, callback) => {
         body: JSON.stringify(result),
     };
 }
-
-module.exports = { handler };

@@ -69,7 +69,7 @@ const client = {
 
         const params = {
             TableName: table,
-            Item: item
+            Item: item,
         };
 
         return await dynamoDb.put(params).promise();
@@ -124,4 +124,4 @@ const client = {
 
 }
 
-module.exports = client;
+export default client;

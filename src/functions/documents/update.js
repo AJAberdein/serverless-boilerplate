@@ -1,6 +1,7 @@
 "use strict";
 
-const dynamo = require('../../modules/dynamo');
+import dynamo from '../../modules/dynamo';
+
 const DYNAMO_TABLE_DOCUMENTS = process.env.DYNAMO_TABLE_DOCUMENTS || 'documents';
 
 /**
@@ -12,7 +13,7 @@ const DYNAMO_TABLE_DOCUMENTS = process.env.DYNAMO_TABLE_DOCUMENTS || 'documents'
  * @returns {Object}
  * 
  */
-const handler = async (event, context, callback) => {
+export const handler = async (event, context, callback) => {
     const { id } = event.pathParameters;
     const { name, description } = JSON.parse(event.body);
 
@@ -31,5 +32,3 @@ const handler = async (event, context, callback) => {
         body: JSON.stringify(result),
     };
 }
-
-module.exports = { handler };

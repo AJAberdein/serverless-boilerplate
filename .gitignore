@@ -5,6 +5,10 @@ jspm_packages
 # Serverless directories
 .serverless
 
+# Webpack directories
+.webpack
+
+
 # Logs
 logs
 *.log
