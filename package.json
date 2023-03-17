@@ -2,15 +2,36 @@
   "name": "serverless-boilerplate",
   "version": "1.0.0",
   "description": "A boilerplate for serverless projects",
+  "scripts": {
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "test": "jest --coverage"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    }
+  },
   "dependencies": {
     "aws-sdk": "^2.1330.0",
     "source-map-support": "^0.5.21"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.0",
+    "@babel/core": "^7.21.3",
+    "@babel/eslint-parser": "^7.21.3",
     "@babel/preset-env": "^7.20.2",
+    "aws-sdk-client-mock": "^2.1.1",
+    "babel-jest": "^29.5.0",
     "babel-loader": "^9.1.2",
     "babel-plugin-source-map-support": "^2.2.0",
+    "eslint": "^8.36.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.7.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jest": "^27.2.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "jest": "^29.5.0",
+    "prettier": "2.8.4",
     "serverless-dynamodb-local": "^0.2.40",
     "serverless-offline": "^12.0.4",
     "serverless-webpack": "^5.11.0",
