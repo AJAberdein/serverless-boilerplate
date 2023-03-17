@@ -24,3 +24,9 @@ Running serverless locally w/ dynamodb & api-gw
 ```
 serverless offline start
 ```
+
+Units tests
+
+```
+npm run test
+```
