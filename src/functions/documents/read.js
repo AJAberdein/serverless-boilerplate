@@ -1,5 +1,6 @@
 import middy from "@middy/core";
 import httppJsonBodyParser from "@middy/http-json-body-parser";
+import httpErrorHandler from "@middy/http-error-handler";
 import dynamo from "../../modules/dynamo";
 
 const DYNAMO_TABLE_DOCUMENTS =
@@ -28,4 +29,6 @@ const handler = async () => {
   };
 };
 
-export default middy(handler).use(httppJsonBodyParser());
+export default middy(handler)
+  .use(httppJsonBodyParser())
+  .use(httpErrorHandler());
