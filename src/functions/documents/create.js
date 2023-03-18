@@ -1,8 +1,6 @@
 import aws from "aws-sdk";
 import middy from "@middy/core";
 import httppJsonBodyParser from "@middy/http-json-body-parser";
-import validator from "@middy/validator";
-import { transpileSchema } from "@middy/validator/transpile";
 import httpErrorHandler from "@middy/http-error-handler";
 import dynamo from "../../modules/dynamo";
 
@@ -26,6 +24,7 @@ const DYNAMO_TABLE_DOCUMENTS =
  */
 const handler = async (event) => {
   const { name, description } = event.body;
+  // const { name, description } = JSON.parse(event.body);
   const document = {
     id: aws.util.uuid.v4(),
     name,
@@ -45,22 +44,6 @@ const handler = async (event) => {
   };
 };
 
-const schema = {
-  type: "object",
-  required: ["body"],
-  properties: {
-    body: {
-      type: "object",
-      required: ["name", "description"],
-      properties: {
-        name: { type: "string" },
-        description: { type: "string" },
-      },
-    },
-  },
-};
-
 export default middy(handler)
   .use(httppJsonBodyParser())
-  .use(validator({ eventSchema: transpileSchema(schema) }))
   .use(httpErrorHandler());

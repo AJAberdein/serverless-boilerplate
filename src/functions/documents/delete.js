@@ -1,7 +1,5 @@
 import middy from "@middy/core";
 import httppJsonBodyParser from "@middy/http-json-body-parser";
-import validator from "@middy/validator";
-import { transpileSchema } from "@middy/validator/transpile";
 import httpErrorHandler from "@middy/http-error-handler";
 import dynamo from "../../modules/dynamo";
 
@@ -36,21 +34,6 @@ const handler = async (event) => {
   };
 };
 
-const schema = {
-  type: "object",
-  properties: {
-    pathParameters: {
-      type: "object",
-      required: ["id"],
-      properties: {
-        id: { type: "string" },
-      },
-    },
-  },
-  required: ["pathParameters"],
-};
-
 export default middy(handler)
   .use(httppJsonBodyParser())
-  .use(validator({ eventSchema: transpileSchema(schema) }))
   .use(httpErrorHandler());
