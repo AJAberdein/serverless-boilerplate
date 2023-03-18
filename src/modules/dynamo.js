@@ -23,8 +23,9 @@ const client = {
       TableName: table,
       Key: { id },
     };
+    const result = await dynamoDb.get(params).promise();
 
-    await dynamoDb.get(params).promise();
+    return result;
   },
 
   /**
@@ -35,7 +36,9 @@ const client = {
    * @returns {Promise<Object>}
    */
   query: async (params) => {
-    await dynamoDb.scan(params).promise();
+    const result = await dynamoDb.scan(params).promise();
+
+    return result;
   },
 
   /**
@@ -46,7 +49,9 @@ const client = {
    * @returns {Promise<Object>}
    */
   scan: async (params) => {
-    await dynamoDb.scan(params).promise();
+    const result = await dynamoDb.scan(params).promise();
+
+    return result;
   },
 
   /**
@@ -62,8 +67,9 @@ const client = {
       TableName: table,
       Item: item,
     };
+    const result = await dynamoDb.put(params).promise();
 
-    await dynamoDb.put(params).promise();
+    return result;
   },
 
   /**
@@ -92,8 +98,9 @@ const client = {
       params.ExpressionAttributeNames[`#${key}`] = `${key}`;
       params.ExpressionAttributeValues[`:${key}`] = attributes[key];
     });
+    const result = await dynamoDb.update(params).promise();
 
-    await dynamoDb.update(params).promise();
+    return result;
   },
 
   /**
@@ -110,8 +117,9 @@ const client = {
       Key: { id },
       ReturnValues: "ALL_OLD",
     };
+    const result = await dynamoDb.delete(params).promise();
 
-    await dynamoDb.delete(params).promise();
+    return result;
   },
 };
 

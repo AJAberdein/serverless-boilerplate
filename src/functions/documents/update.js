@@ -1,3 +1,5 @@
+import middy from "@middy/core";
+import httppJsonBodyParser from "@middy/http-json-body-parser";
 import dynamo from "../../modules/dynamo";
 
 const DYNAMO_TABLE_DOCUMENTS =
@@ -12,13 +14,14 @@ const DYNAMO_TABLE_DOCUMENTS =
  * @returns {Object}
  *
  */
-export default async (event) => {
+const handler = async (event) => {
   const { id } = event.pathParameters;
-  const { name, description } = JSON.parse(event.body);
+  const { name, description } = event.body;
 
   const params = {};
   if (name) params.name = name;
   if (description) params.description = description;
+
   params.updatedAt = new Date().toISOString();
 
   const result = await dynamo.update(id, params, DYNAMO_TABLE_DOCUMENTS);
@@ -28,3 +31,5 @@ export default async (event) => {
     body: JSON.stringify(result),
   };
 };
+
+export default middy(handler).use(httppJsonBodyParser());

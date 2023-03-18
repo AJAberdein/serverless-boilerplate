@@ -1,64 +1,64 @@
 "use strict";
 
-import handler from '../../../src/functions/documents/delete';
-import dynamo from '../../../src/modules/dynamo';
+import handler from "../../../src/functions/documents/delete";
+import dynamo from "../../../src/modules/dynamo";
 
-jest.mock('../../../src/modules/dynamo', () => ({
-    delete: jest.fn(),
+jest.mock("../../../src/modules/dynamo", () => ({
+  delete: jest.fn(),
 }));
 
 const mockedUuid = "e208634d-5e1e-487b-8fcb-7d7e89efe905";
 const mockedDateISO = "2023-03-17T11:00:00.000Z";
-const mockedName = "Document 1"
-const mockedDescription = "This is the mocked document"
+const mockedName = "Document 1";
+const mockedDescription = "This is the mocked document";
 
 const eventInput = {
-    pathParameters: {
-        id: mockedUuid,
-    },
-    body: JSON.stringify({
-        name: mockedName,
-        description: mockedDescription,
-    })
-}
+  pathParameters: {
+    id: mockedUuid,
+  },
+  body: JSON.stringify({
+    name: mockedName,
+    description: mockedDescription,
+  }),
+};
 
-const fakeResult = JSON.stringify(
-    {
-        Attributes: {
-            id: mockedUuid,
-            name: mockedName,
-            created_at: mockedDateISO,
-            description: mockedDescription,
-            updatedAt: mockedDateISO
-        }
-    }
-);
+const fakeResult = JSON.stringify({
+  Attributes: {
+    id: mockedUuid,
+    name: mockedName,
+    created_at: mockedDateISO,
+    description: mockedDescription,
+    updatedAt: mockedDateISO,
+  },
+});
 
-jest.spyOn(Date.prototype, 'toISOString').mockReturnValue(mockedDateISO);
+jest.spyOn(Date.prototype, "toISOString").mockReturnValue(mockedDateISO);
 
-describe('update document in lambda handler', () => {
+jest.mock("@middy/core", () => {
+  return (handler) => {
+    return {
+      use: jest.fn().mockReturnValue(handler),
+    };
+  };
+});
 
-    afterEach(() => {
-        jest.clearAllMocks();
-    });
+describe("update document in lambda handler", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
-    test('document update handler calls update to dynamo client', async () => {
+  test("document update handler calls update to dynamo client", async () => {
+    await handler(eventInput);
 
-        await handler(eventInput);
+    expect(dynamo.delete).toHaveBeenCalled();
+    expect(dynamo.delete).toHaveBeenCalledWith(mockedUuid, "documents");
+  });
 
-        expect(dynamo.delete).toHaveBeenCalled();
-        expect(dynamo.delete).toHaveBeenCalledWith(mockedUuid, 'documents');
+  test("document udpate handler gives valid success result", async () => {
+    dynamo.delete.mockResolvedValue(fakeResult);
+    const result = await handler(eventInput);
 
-    });
-
-    test('document udpate handler gives valid success result', async () => {
-
-        dynamo.delete.mockResolvedValue(fakeResult);
-        const result = await handler(eventInput);
-
-        expect(result.statusCode).toBe(200);
-        expect(result.body).toEqual(JSON.stringify(fakeResult));
-
-    });
-
+    expect(result.statusCode).toBe(200);
+    expect(result.body).toEqual(JSON.stringify(fakeResult));
+  });
 });

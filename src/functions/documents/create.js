@@ -1,4 +1,6 @@
 import aws from "aws-sdk";
+import middy from "@middy/core";
+import httppJsonBodyParser from "@middy/http-json-body-parser";
 import dynamo from "../../modules/dynamo";
 
 const DYNAMO_TABLE_DOCUMENTS =
@@ -19,8 +21,8 @@ const DYNAMO_TABLE_DOCUMENTS =
  * }
  *
  */
-export default async (event) => {
-  const { name, description } = JSON.parse(event.body);
+const handler = async (event) => {
+  const { name, description } = event.body;
   const document = {
     id: aws.util.uuid.v4(),
     name,
@@ -32,10 +34,12 @@ export default async (event) => {
   /**
    * Put document item into dynamodb
    */
-  const result = await dynamo.put(document, DYNAMO_TABLE_DOCUMENTS);
+  await dynamo.put(document, DYNAMO_TABLE_DOCUMENTS);
 
   return {
     statusCode: 200,
-    body: JSON.stringify(result),
+    body: JSON.stringify(document),
   };
 };
+
+export default middy(handler).use(httppJsonBodyParser());

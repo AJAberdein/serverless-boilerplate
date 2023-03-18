@@ -52,28 +52,28 @@ custom:
 functions:
   readDocuments:
     timeout: 30
-    handler: src/functions/documents/read.handler
+    handler: src/functions/documents/read.default
     events:
       - http:
           path: /documents
           method: get
   createDocuments:
     timeout: 30
-    handler: src/functions/documents/create.handler
+    handler: src/functions/documents/create.default
     events:
       - http:
           path: /documents
           method: post
   updateDocuments:
     timeout: 30
-    handler: src/functions/documents/update.handler
+    handler: src/functions/documents/update.default
     events:
       - http:
           path: /documents/{id}
           method: put
   deleteDocuments:
     timeout: 30
-    handler: src/functions/documents/delete.handler
+    handler: src/functions/documents/delete.default
     events:
       - http:
           path: /documents/{id}
