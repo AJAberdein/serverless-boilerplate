@@ -3,15 +3,14 @@
 
 ## Usage
 
-### Running locally
+### Run locally
 
-DynamoDB offline workaraound for DynamoDBLocal Jar 403 issue on 
+Install dynamodb offline
 ```
 sls dynamodb install
 ```
-https://github.com/99x/serverless-dynamodb-local/issues/209
 
-This is why we use docker...
+If you experience timeout issues when downloading the dynamodb jar, you can download it manually and place it in the .dynamodb folder
 
 ```
 wget http://dynamodb-local.s3-website-us-west-2.amazonaws.com/dynamodb_local_latest.tar.gz
@@ -22,7 +21,14 @@ tar zxvf dynamodb_local_latest.tar.gz -C .dynamodb
 Running serverless locally w/ dynamodb & api-gw
 
 ```
-serverless offline start
+npm run dev
+```
+
+
+### Run using docker
+
+```
+npm run dev:docker
 ```
 
 Units tests

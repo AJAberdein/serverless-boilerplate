@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A boilerplate for serverless projects",
   "scripts": {
+    "dev": "npm install; npm run dev:local",
+    "dev:local": "serverless offline start",
+    "dev:docker": "docker-compose up --force-recreate",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "test": "jest --coverage"
@@ -13,9 +16,12 @@
     }
   },
   "dependencies": {
+    "@aws-lambda-powertools/logger": "^1.6.0",
+    "@aws-lambda-powertools/metrics": "^1.6.0",
+    "@aws-lambda-powertools/tracer": "^1.6.0",
     "@middy/core": "^4.2.7",
-    "@middy/http-json-body-parser": "^4.2.7",
     "@middy/http-error-handler": "^4.2.7",
+    "@middy/http-json-body-parser": "^4.2.7",
     "aws-sdk": "^2.1330.0",
     "source-map-support": "^0.5.21"
   },
